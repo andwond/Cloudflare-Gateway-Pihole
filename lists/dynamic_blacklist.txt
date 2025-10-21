@@ -14,7 +14,6 @@ apps.admob.com
 zalo.video
 res-zalo.zadn.vn
 talk-m.zaloapp.com
-dlfl.vn
 s3-advertising.zalopay.vn
 h5.zdn.vn
 musicstatus.itunes.apple.com
