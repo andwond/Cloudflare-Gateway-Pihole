@@ -1,3 +1,5 @@
+static-zmp3.zmdcdn.me
+discovery.api.zaloapp.com
 onetrust.com
 zalo-effect.zadn.vn
 google-analytics.com
