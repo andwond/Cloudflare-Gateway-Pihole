@@ -1,3 +1,4 @@
+onetrust.com
 zalo-effect.zadn.vn
 google-analytics.com
 crashlytics.com
