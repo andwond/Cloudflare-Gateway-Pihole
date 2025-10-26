@@ -1,3 +1,4 @@
+zalo-effect.zadn.vn
 google-analytics.com
 crashlytics.com
 www.googleadservices.com
