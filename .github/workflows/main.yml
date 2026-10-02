@@ -6,11 +6,15 @@ on:
   #   - cron: "0 0 * * 5"   # Every Friday midnight UTC
   workflow_dispatch:
 
+concurrency:
+  group: cloudflare-gateway-sync
+  cancel-in-progress: false
+
 jobs:
   run:
     name: Sync Block & Allow Lists
     permissions: write-all
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04-arm
     timeout-minutes: 30
 
     env:
@@ -23,17 +27,23 @@ jobs:
       # Allow sources
       WHITELIST_URLS: ${{ vars.WHITELIST_URLS }}
       DYNAMIC_WHITELIST: ${{ vars.DYNAMIC_WHITELIST }}
+      # Free-threaded Python
+      PYTHON_GIL: "0"
+      PYTHONDONTWRITEBYTECODE: "1"
+      # Thread pool size for src (read it with int(os.environ["WORKERS"]))
+      WORKERS: "16"
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@main
         with:
-          fetch-depth: 0
+          fetch-depth: 1
 
       - name: Install Python
         uses: actions/setup-python@main
         with:
-          python-version: "3.11"
+          python-version: "3.13t"
+          check-latest: true
 
       - name: Cache Cloudflare state
         id: cache-cloudflare
@@ -45,4 +55,4 @@ jobs:
             ${{ runner.os }}-cloudflare-cache-
 
       - name: Run — Sync Block & Allow to Cloudflare Gateway
-        run: python -m src run
+        run: python -X gil=0 -m src run
